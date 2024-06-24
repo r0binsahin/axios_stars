@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CharacterFromSwapi, Character, Planet } from '../../types';
-import axios from "axios";
+import axios from 'axios';
 const router = Router();
 
 const parseCharacter = (ch: CharacterFromSwapi, planet?: Planet): Character => {
@@ -18,15 +18,15 @@ const parseCharacter = (ch: CharacterFromSwapi, planet?: Planet): Character => {
 router.get('/characters', async (req, res) => {
   try {
     const response = await axios.get(`https://swapi.dev/api/people/`);
-/*     const data = (await response.json()) as { results: CharacterFromSwapi[] }; */
+    /*     const data = (await response.json()) as { results: CharacterFromSwapi[] }; */
 
-const data = response.data as  { results: CharacterFromSwapi[] };
-console.log(response.data)
+    const data = response.data as { results: CharacterFromSwapi[] };
+    console.log('raspberry:', response.data);
 
     const parsedData = await Promise.all(
       data.results.map(async (character) => {
-        const planetResponse = await fetch(character.homeworld);
-        const planet = (await planetResponse.json()) as Planet;
+        const planetResponse = await axios.get(character.homeworld);
+        const planet = planetResponse.data as Planet;
 
         return parseCharacter(character, planet);
       })
@@ -46,18 +46,12 @@ console.log(response.data)
 
 router.get('/characters/:id', async (req, res) => {
   try {
-    const response = await fetch(
+    const response = await axios.get(
       `https://swapi.dev/api/people/${req.params.id}/`
     );
 
-    const character = (await response.json()) as CharacterFromSwapi;
+    const character = response.data as CharacterFromSwapi;
 
-    /*  const planetRes = await fetch(character.homeworld);
-
-    const plan = (await planetRes.json()) as Planet;
-
-    console.log(plan.name, 'full thing', plan);
-*/
     const parsedCH = parseCharacter(character);
 
     //console.log(parsedCH);
