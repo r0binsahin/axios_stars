@@ -38,7 +38,7 @@ export const renderCharactersList = (
     const listItem = document.importNode(template.content, true)
       .firstElementChild as HTMLElement;
 
-    //listItem.setAttribute("data-char-id", character.id.toString());
+    listItem.setAttribute('data-char-id', character.id.toString());
 
     const nameEl = listItem.querySelector(
       '.character-item__name'

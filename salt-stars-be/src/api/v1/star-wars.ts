@@ -4,13 +4,13 @@ import axios from 'axios';
 const router = Router();
 
 const parseCharacter = (ch: CharacterFromSwapi, planet?: Planet): Character => {
-  /*   const urlSplit = ch.url.split('/'); */
+  const urlSplit = ch.url.split('/');
   return {
     name: ch.name,
     gender: ch.gender,
     birthYear: ch.birth_year,
     homeworld: ch.homeworld,
-    /*     id: Number(urlSplit.at(-2)), */
+    id: Number(urlSplit.at(-2)),
     planet: planet?.name,
   };
 };

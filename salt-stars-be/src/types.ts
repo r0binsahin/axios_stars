@@ -3,7 +3,7 @@ export type Character = {
   gender: string;
   birthYear: string;
   homeworld: string;
-  id?: number;
+  id: number;
   planet?: string;
 };
 

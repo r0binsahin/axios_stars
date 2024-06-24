@@ -55,9 +55,10 @@ export const initListeners = () => {
     showLoader(loader);
     const charId = target.getAttribute('data-char-id');
     const char = state.characters.find((ch) => charId === ch.id.toString());
+    console.log(charId);
 
     const character = getCharacterDetails(char!.id);
-    codeEl.textContent = JSON.stringify(character, null, 2);
+    codeEl.textContent = JSON.stringify(character);
     hideLoader(loader);
     codeEl.style.opacity = '1';
   });
